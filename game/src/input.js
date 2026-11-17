@@ -59,15 +59,27 @@ export function createInput(canvas) {
     return { x, y };
   }
 
-  // One-shot actions, spent on read: Enter/Space/right-click confirms,
-  // P or Escape pauses, E enters a car, F punches, R restarts.
-  function takeActions() {
+  // One-shot actions, spent on read. The UI layer and the player read
+  // DIFFERENT keys, so one tap is never eaten by the wrong layer: the UI
+  // takes confirm/pause, the player takes enter/punch.
+  function takeUiActions() {
     let actions = 0;
     if (pressed.has('Enter') || pressed.has('Space') || pressed.has('MouseRight')) actions |= ACTION_CONFIRM;
     if (pressed.has('KeyP') || pressed.has('Escape')) actions |= ACTION_PAUSE;
+    pressed.delete('Enter');
+    pressed.delete('Space');
+    pressed.delete('MouseRight');
+    pressed.delete('KeyP');
+    pressed.delete('Escape');
+    return actions;
+  }
+
+  function takePlayerActions() {
+    let actions = 0;
     if (pressed.has('KeyE')) actions |= ACTION_ENTER;
     if (pressed.has('KeyF')) actions |= ACTION_PUNCH;
-    pressed.clear();
+    pressed.delete('KeyE');
+    pressed.delete('KeyF');
     return actions;
   }
 
@@ -83,5 +95,5 @@ export function createInput(canvas) {
     return hit;
   }
 
-  return { isDown, moveVector, takeActions, consumeRestart, muteToggle, mouse, keys };
+  return { isDown, moveVector, takeUiActions, takePlayerActions, consumeRestart, muteToggle, mouse, keys };
 }

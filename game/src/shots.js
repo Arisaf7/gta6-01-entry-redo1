@@ -24,7 +24,7 @@ function autoInput(drive) {
     moveVector: () => ({ x: 0, y: 0 }),
     mouse: { x: 640, y: 360, down: false },
     isDown: (code) => drive && code === 'KeyW',
-    takeActions: () => 0,
+    takePlayerActions: () => 0,
     consumeRestart: () => false,
     muteToggle: () => false,
     keys: new Set(),

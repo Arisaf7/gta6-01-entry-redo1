@@ -145,7 +145,7 @@ function runGame() {
   }
 
   function handleActions() {
-    const actions = input.takeActions();
+    const actions = input.takeUiActions();
     if (input.muteToggle()) {
       audio.setMuted(!audio.isMuted());
       announce(audio.isMuted() ? 'Muted.' : 'Sound on.');

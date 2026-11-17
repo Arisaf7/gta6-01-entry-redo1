@@ -56,7 +56,7 @@ export function createPlayer(city) {
       player.health = Math.min(PLAYER.health, player.health + PLAYER.regenRate * dt);
     }
 
-    const actions = input.takeActions();
+    const actions = input.takePlayerActions();
 
     if (player.onFoot) {
       const move = input.moveVector();
